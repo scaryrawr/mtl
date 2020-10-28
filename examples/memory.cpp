@@ -1,9 +1,9 @@
 #include <memory>
 #include <mtl/memory.hpp>
 
-void custom_free(void* ptr)
+void custom_free(void *ptr)
 {
-	printf("%s\n", static_cast<char*>(ptr));
+	printf("%s\n", static_cast<char *>(ptr));
 	free(ptr);
 }
 
@@ -17,11 +17,11 @@ int main(int argc, char *argv[])
 
 	using unique_malloc2 = mtl::unique_ptr<decltype(custom_free), &custom_free>;
 
-	unique_malloc mem{static_cast<char*>(malloc(sizeof(world)))};
+	unique_malloc mem{static_cast<char *>(malloc(sizeof(world)))};
 	sprintf(mem.get(), "%s", world);
 
 	unique_malloc2 mem2{malloc(sizeof(hello))};
-	sprintf(static_cast<char*>(mem2.get()), "%s", hello);
-	
+	sprintf(static_cast<char *>(mem2.get()), "%s", hello);
+
 	return 0;
 }

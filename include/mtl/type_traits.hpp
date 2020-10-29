@@ -3,14 +3,14 @@
 namespace mtl
 {
     template <class>
-    struct argument_type;
+    struct unary_argument_type;
 
     template <class ReturnType, class ArgType>
-    struct argument_type<ReturnType(ArgType)>
+    struct unary_argument_type<ReturnType(ArgType)>
     {
         using type = ArgType;
     };
 
     template <class FuncType>
-    using argument_type_t = typename argument_type<FuncType>::type;
+    using unary_argument_type_t = typename unary_argument_type<FuncType>::type;
 } // namespace mtl

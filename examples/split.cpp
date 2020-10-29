@@ -14,9 +14,9 @@ int main(int argc, char const *argv[])
 
     std::cout << std::endl;
 
-    const wchar_t *worldhello = L"World Hello";
+    std::wstring worldhello = L"World Hello";
     std::array<std::wstring_view, 2> wideworld;
-    mtl::split<wchar_t>(worldhello, L" ", std::begin(wideworld));
+    mtl::split(worldhello, L" ", std::begin(wideworld));
     std::copy(std::rbegin(wideworld), std::rend(wideworld), std::ostream_iterator<std::wstring_view, wchar_t>(std::wcout, L" "));
 
     std::wcout << std::endl;

@@ -5,7 +5,7 @@
 
 namespace mtl
 {
-    template <class CharT = char, class OutType = std::basic_string_view<CharT>, class OutIter>
+    template <class CharT, class OutType = std::basic_string_view<CharT>, class OutIter>
     OutIter split(std::basic_string_view<CharT> str, std::basic_string_view<CharT> delim, OutIter out)
     {
         size_t position{};
@@ -23,5 +23,17 @@ namespace mtl
         }
 
         return out;
+    }
+
+    template <class CharT, class OutType = std::basic_string_view<CharT>, class Allocator = std::allocator<CharT>, class CharTraits = std::char_traits<CharT>, class OutItr>
+    OutItr split(const std::basic_string<CharT, CharTraits, Allocator> &str, std::basic_string_view<typename CharTraits::char_type> delim, OutItr out)
+    {
+        return split<CharT, OutType, OutItr>(std::basic_string_view<CharT>(str), delim, out);
+    }
+
+    template <class CharT, class OutType = std::basic_string_view<CharT>, class CharTraits = std::char_traits<CharT>, class OutItr>
+    OutItr split(const CharT *str, std::basic_string_view<typename CharTraits::char_type> delim, OutItr out)
+    {
+        return split<CharT, OutType, OutItr>(std::basic_string_view<CharT>(str), delim, out);
     }
 } // namespace mtl

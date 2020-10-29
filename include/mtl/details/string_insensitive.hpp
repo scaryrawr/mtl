@@ -56,8 +56,8 @@ namespace mtl
             const std::locale &m_locale;
         };
 
-        template <class CharT>
-        auto ifind(std::basic_string_view<CharT> str, std::basic_string_view<CharT> other, size_t startPosition = 0, const std::locale &locale = std::locale())
+        template <class CharT, class CharTraits = std::char_traits<CharT>>
+        auto ifind(std::basic_string_view<CharT> str, std::basic_string_view<typename CharTraits::char_type> other, size_t startPosition = 0, const std::locale &locale = std::locale())
         {
             auto itr = std::search(std::begin(str) + startPosition, std::end(str), std::begin(other), std::end(other), iequals<CharT>{locale});
             return itr == std::end(str) ? std::basic_string_view<CharT>::npos : itr - std::begin(str);

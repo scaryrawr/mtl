@@ -6,3 +6,6 @@ target_link_libraries(split mtl)
 
 add_executable(insensitive insensitive.cpp)
 target_link_libraries(insensitive mtl)
+
+add_executable(outptr outptr.cpp)
+target_link_libraries(outptr mtl)

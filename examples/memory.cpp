@@ -12,7 +12,7 @@ void custom_free(void *ptr)
 
 int main(int argc, char *argv[])
 {
-	using free_deleter = mtl::unique_deleter<decltype(custom_free), &custom_free>;
+	using free_deleter = mtl::custom_delete<decltype(custom_free), &custom_free>;
 	using unique_malloc = std::unique_ptr<char, free_deleter>;
 
 	using unique_malloc2 = mtl::unique_ptr<decltype(custom_free), &custom_free>;

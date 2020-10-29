@@ -8,7 +8,7 @@
 namespace mtl
 {
     template <class FuncPtr, FuncPtr func>
-    struct unique_deleter
+    struct custom_delete
     {
         using value_type = unary_argument_type_t<FuncPtr>;
         auto operator()(value_type arg)
@@ -18,7 +18,7 @@ namespace mtl
     };
 
     template <class FuncPtr, FuncPtr func>
-    using unique_ptr = std::unique_ptr<std::remove_pointer_t<unary_argument_type_t<FuncPtr>>, unique_deleter<FuncPtr, func>>;
+    using unique_ptr = std::unique_ptr<std::remove_pointer_t<unary_argument_type_t<FuncPtr>>, custom_delete<FuncPtr, func>>;
 
     template <class SmartPtr>
     struct out_ptr

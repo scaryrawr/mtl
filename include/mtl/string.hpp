@@ -1,7 +1,4 @@
 #pragma once
 
 #include "./details/string_split.hpp"
-
-namespace mtl
-{
-} // namespace mtl
+#include "./details/string_insensitive.hpp"

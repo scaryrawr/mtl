@@ -11,7 +11,7 @@ namespace mtl
     struct custom_delete
     {
         using value_type = unary_argument_type_t<FuncPtr>;
-        auto operator()(value_type arg)
+        auto operator()(value_type arg) const
         {
             return func(arg);
         }
@@ -20,11 +20,15 @@ namespace mtl
     template <class FuncPtr, FuncPtr func>
     using unique_ptr = std::unique_ptr<std::remove_pointer_t<unary_argument_type_t<FuncPtr>>, custom_delete<FuncPtr, func>>;
 
+    template <class PtrType, class FuncPtr, FuncPtr func>
+    using typed_unique_ptr = std::unique_ptr<PtrType, custom_delete<FuncPtr, func>>;
+
     template <class SmartPtr>
     struct out_ptr
     {
         using pointer = typename SmartPtr::pointer;
-        out_ptr(SmartPtr& smartpointer) : wrapper(smartpointer)
+
+        out_ptr(SmartPtr &smartpointer) : wrapper(smartpointer)
         {
         }
 
@@ -33,13 +37,13 @@ namespace mtl
             wrapper.reset(ptr);
         }
 
-        operator pointer*()
+        operator pointer *()
         {
             return &ptr;
         }
 
     private:
         pointer ptr{};
-        SmartPtr& wrapper;
+        SmartPtr &wrapper;
     };
 } // namespace mtl

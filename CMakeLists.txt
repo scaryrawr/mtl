@@ -6,14 +6,16 @@ project("mtl"
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(mtl INTERFACE)
 
 target_include_directories(mtl INTERFACE include/)
 
-add_subdirectory(examples)
+option(BUILD_TESTS "Build unit tests" ON)
+if(BUILD_TESTS)
+        enable_testing()
+        add_subdirectory(tests)
+endif()
 
 install(TARGETS mtl)
-
-set(BUILD_EXAMPLES ON)

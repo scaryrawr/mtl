@@ -4,62 +4,15 @@
 #include <string>
 #include <string_view>
 
+#include "istring_compare.hpp"
 namespace mtl
 {
     namespace string
     {
-        template <class CharT = char>
-        struct iequals
-        {
-            iequals(const std::locale &locale = std::locale()) : m_locale(locale)
-            {
-            }
-
-            bool operator()(CharT left, CharT right) const
-            {
-                return std::toupper(left, m_locale) == std::toupper(right, m_locale);
-            }
-
-        private:
-            const std::locale &m_locale;
-        };
-
-        template <class CharT = char>
-        struct iless
-        {
-            iless(const std::locale &locale = std::locale()) : m_locale(locale)
-            {
-            }
-
-            auto operator()(CharT left, CharT right) const
-            {
-                return std::toupper(left, m_locale) < std::toupper(right, m_locale);
-            }
-
-        private:
-            const std::locale &m_locale;
-        };
-
-        template <class CharT = char>
-        struct igreater
-        {
-            igreater(const std::locale &locale = std::locale()) : m_locale(locale)
-            {
-            }
-
-            auto operator()(CharT left, CharT right) const
-            {
-                return std::toupper(left, m_locale) > std::toupper(right, m_locale);
-            }
-
-        private:
-            const std::locale &m_locale;
-        };
-
         template <class CharT, class CharTraits = std::char_traits<CharT>>
         auto ifind(std::basic_string_view<CharT> str, std::basic_string_view<typename CharTraits::char_type> other, size_t startPosition = 0, const std::locale &locale = std::locale())
         {
-            auto itr = std::search(std::begin(str) + startPosition, std::end(str), std::begin(other), std::end(other), iequals<CharT>{locale});
+            auto itr = std::search(std::begin(str) + startPosition, std::end(str), std::begin(other), std::end(other), character::iequals<CharT>{locale});
             return itr == std::end(str) ? std::basic_string_view<CharT>::npos : itr - std::begin(str);
         }
 

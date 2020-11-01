@@ -5,6 +5,7 @@ pkg_check_modules(GTEST REQUIRED gtest_main)
 set(SOURCES
     ./src/string_icompare.cpp
     ./src/string_ifind.cpp
+    ./src/string_replace.cpp
     ./src/string_split.cpp
     ./src/memory_out_ptr.cpp)
 

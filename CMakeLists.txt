@@ -12,7 +12,7 @@ add_library(mtl INTERFACE)
 
 target_include_directories(mtl INTERFACE include/)
 
-option(BUILD_TESTS "Build unit tests" OFF)
+option(BUILD_TESTS "Build unit tests" ON)
 if(BUILD_TESTS)
         enable_testing()
         add_subdirectory(tests)

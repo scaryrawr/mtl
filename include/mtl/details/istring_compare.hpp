@@ -38,10 +38,12 @@ namespace mtl
             {
                 size_t len{std::min(lhs.size(), rhs.size())};
                 size_t pos{};
-                while (std::toupper(lhs[pos], m_locale) == std::toupper(rhs[pos], m_locale) && pos < len)
+                while (pos < len && std::toupper(lhs[pos], m_locale) == std::toupper(rhs[pos], m_locale))
                 {
                     ++pos;
                 }
+                
+                pos = std::min(pos, len - 1);
 
                 return (std::toupper(lhs[pos], m_locale) == std::toupper(rhs[pos], m_locale))
                            ? (lhs.size() <=> rhs.size())

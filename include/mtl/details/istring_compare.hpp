@@ -36,18 +36,13 @@ namespace mtl
 
             auto operator()(std::basic_string_view<CharT> lhs, std::basic_string_view<CharT> rhs) const
             {
-                size_t len{std::min(lhs.size(), rhs.size())};
-                size_t pos{};
-                while (pos < len && std::toupper(lhs[pos], m_locale) == std::toupper(rhs[pos], m_locale))
-                {
-                    ++pos;
-                }
-                
-                pos = std::min(pos, len - 1);
+                auto [lp, rp] = std::mismatch(std::begin(lhs), std::end(lhs),
+                                              std::begin(rhs), std::end(rhs), character::iequals<CharT>(m_locale));
 
-                return (std::toupper(lhs[pos], m_locale) == std::toupper(rhs[pos], m_locale))
-                           ? (lhs.size() <=> rhs.size())
-                           : (std::toupper(lhs[pos], m_locale) <=> std::toupper(rhs[pos], m_locale));
+                return (lp == std::end(lhs) && rp == std::end(rhs)) ? std::strong_ordering::equal
+                       : (lp == std::end(lhs))                      ? std::strong_ordering::less
+                       : (rp == std::end(rhs))                      ? std::strong_ordering::greater
+                                                                    : std::toupper(*lp, m_locale) <=> std::toupper(*rp, m_locale);
             }
 
         private:
